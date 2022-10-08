@@ -88,7 +88,7 @@ function parseCommandLineArgs(name='something',extraArr=[]){
         argmap.get(se)(); // look it up and call it.
       }else if(!isNaN(testNum)){
         _nums.push(testNum);
-        _strarr.push(e);
+        _strarr.push(e)
       }else if(e.charAt(0)=='-'){
         isError = true;
         unknownArgs.push(e);
@@ -123,7 +123,8 @@ function parseCommandLineArgs(name='something',extraArr=[]){
     dlog()
     if(isVerbose) clog('verbose set to TRUE')
     if(isDebug)   clog('  debug set to TRUE')
-    if(nums.length>0)   dlog(' integers found on command line:', nums);
+    if(_nums.length>0)   dlog(' integers found on command line:', _nums);
+    if(_strarr.length>0)   dlog(' strings found on command line:', _strarr);
     return true;
 }
 

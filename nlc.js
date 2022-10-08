@@ -1,6 +1,6 @@
 const { parseCommandLineArgs } = require('./util');
 
-__ = require('./util');
+let __ = require('./util');
 
 'use strict';
 
@@ -57,6 +57,7 @@ function processNumAsStr(snum){
 }
 
 function processNum(num){
+    let ret = '';
     if( num === 0 ){
         return 'Zero';
     }
@@ -73,3 +74,51 @@ function processNum(num){
 }
 
 __.parseCommandLineArgs('nlc')
+
+let strArr = __.getStringsFromCommandLine();
+while(strArr.length>0){
+    let e = strArr.shift();
+    let fc = e.charAt(0)
+    if( !'rRsS'.includes( fc )){
+        continue;
+    }
+    e = e.slice(1);
+    if('sS'.includes(fc)){
+        let input = parseInt(e);
+        let output = processNum(input);
+        __.clog()
+        __.clog(`  in: ${input}  output: ${output}`)
+        __.clog()
+        let ccount = output.replace(/\s+/g, '').length
+        __.clog(`  character count: ${ccount}`)
+        __.clog()
+
+        if(__.getIsSilent()){
+            console.log(ccount)
+        }
+
+    }
+    else if('rR'.includes(fc)){
+        let twin = e.split('-')
+        let start = parseInt(twin[0]);
+        let end   = parseInt(twin[1]);
+        __.clog()
+        let sum = 0;
+        for(let i=start;i<=end;++i){
+            let input = i;
+            let output = processNum(input);
+            let ccount = output.replace(/\s+/g, '').length
+            sum += ccount;
+            __.clog(`  in: ${input}  output: ${output}`)
+        }
+        __.clog()
+        __.clog(`  total character count: ${sum}`)
+        __.clog()
+
+
+        if(__.getIsSilent()){
+            console.log(sum)
+        }
+
+    }
+}
